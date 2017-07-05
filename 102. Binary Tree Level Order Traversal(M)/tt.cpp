@@ -25,7 +25,7 @@ return its level order traversal as:
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
-class Solution {
+class Solution1 {
 public:
     vector<vector<int>> levelOrder(TreeNode* root) {
         vector<vector<int>> result;
@@ -45,6 +45,30 @@ public:
                 q.pop();
             }
             q = temp;
+            result.push_back(vec);
+        }
+        return result;
+    }
+};
+
+class Solution2 {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        vector<vector<int>> result;
+        queue<TreeNode*> qLevel;
+        if (root == nullptr) return result;
+        qLevel.push(root);
+        while (!qLevel.empty()) {
+            int size = qLevel.size();
+            vector<int> vec(size);
+            for (int i = 0; i < size; ++i) {
+                vec[i] = qLevel.front() -> val;
+                if (qLevel.front() -> left)
+                    qLevel.push(qLevel.front() -> left);
+                if (qLevel.front() -> right)
+                    qLevel.push(qLevel.front() -> right);
+                qLevel.pop();
+            }
             result.push_back(vec);
         }
         return result;
